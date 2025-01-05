@@ -12,6 +12,7 @@ export default function Dashboard() {
   const [loading, setLoading] = useState<boolean>(true);
   const { fetchTasks, tasks: tasksState } = useTaskStore();
   const { user } = useUserStore();
+  const [error, setError] = useState<string | null>(null);
 
   const fetchAllTask = async () => {
     try {
@@ -22,8 +23,8 @@ export default function Dashboard() {
       fetchTasks(user.id);
       setTasks(tasksState);
       setLoading(false);
-    } catch (error) {
-      console.error("Error fetching tasks:", error);
+    } catch (error: unknown) {
+      setError((error as Error).message);
     } finally {
       setLoading(false);
     }
@@ -81,6 +82,7 @@ export default function Dashboard() {
           Logout
         </button>
       </div>
+      {error && <p className="text-red-500 text-sm mt-4">{error}</p>}
     </div>
   );
 }

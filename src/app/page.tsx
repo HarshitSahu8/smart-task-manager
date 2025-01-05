@@ -20,8 +20,6 @@ export default function Home() {
   }, [fetchAllTaskFromStore, fetchTask]);
 
   const handleAddTask = async (task: Task) => {
-    console.log("Task:", task);
-
     await addTask(task);
     fetchTask();
   };

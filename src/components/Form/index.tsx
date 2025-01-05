@@ -54,7 +54,6 @@ const Form = ({ FormType }: { FormType: "Log In" | "Sign Up" }) => {
         await signIn(email, password); // Sign in after sign up
       }
     } catch (error: unknown) {
-      console.error("Error:", error);
       setError((error as Error)?.message);
     }
   };
