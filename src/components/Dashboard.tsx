@@ -1,6 +1,6 @@
 "use client";
 import { useEffect, useState } from "react";
-import { Task } from "../utils/api"; // Make sure getTasks is from Supabase API
+import { Task } from "@/utils/api";
 import useTaskStore from "@/store/taskStore";
 import useUserStore from "@/store/userStore";
 import { signOut } from "@/utils/auth";
@@ -11,7 +11,7 @@ export default function Dashboard() {
   const [tasks, setTasks] = useState<Task[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const { fetchTasks, tasks: tasksState } = useTaskStore();
-  const { user } = useUserStore();
+  const { user, setUser } = useUserStore();
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
@@ -32,7 +32,7 @@ export default function Dashboard() {
     };
 
     fetchAllTask();
-  }, [user, fetchTasks, tasksState, router]);
+  }, [user]);
 
   const totalTasks = tasks.length;
   const completedTasks = tasks.filter((task) => task.completed).length;
@@ -73,6 +73,7 @@ export default function Dashboard() {
         <button
           onClick={() => {
             signOut().then(() => {
+              setUser(null);
               router.push("/login");
             });
           }}

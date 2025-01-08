@@ -7,7 +7,6 @@ import { supabase } from "@/utils/supabase";
 
 export default function Home() {
   const { tasks, fetchTasks: fetchAllTaskFromStore } = useTaskStore();
-  // Fetch tasks when the component mounts
   const fetchTask = useCallback(async () => {
     const user = await supabase.auth.getUser();
     if (user.data.user) fetchAllTaskFromStore(user.data.user.id);

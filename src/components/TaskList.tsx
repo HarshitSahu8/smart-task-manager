@@ -6,7 +6,10 @@ interface TaskListProps {
   noHeading?: boolean;
 }
 
-export default function TaskList({ tasks, noHeading }: TaskListProps) {
+export default function TaskList({
+  tasks,
+  noHeading,
+}: Readonly<TaskListProps>) {
   return (
     <div className="max-w-7xl mx-auto p-4">
       {noHeading ? null : (

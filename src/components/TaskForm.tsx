@@ -52,7 +52,6 @@ export default function TaskForm({
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    // remove id from the task object
     if (!task.id) {
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const { id, ...refineTask } = task;
@@ -152,7 +151,7 @@ export default function TaskForm({
 
       <button
         type="submit"
-        className="text-gray-800 w-full py-3 px-6 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
+        className="text-gray-800 w-full py-3 px-6 bg-blue-600 font-semibold rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
       >
         {buttonLabel}
       </button>

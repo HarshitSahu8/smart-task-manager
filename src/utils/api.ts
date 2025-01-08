@@ -1,4 +1,3 @@
-// utils/api.ts
 import { supabase } from "./supabase";
 
 export interface Task {
@@ -54,7 +53,6 @@ export const deleteTask = async (id: string) => {
   return data;
 };
 
-// Get a task by ID with user identification
 export const getTaskById = async (userId: string, taskId: string) => {
   const { data, error } = await supabase
     .from("tasks")
@@ -67,7 +65,6 @@ export const getTaskById = async (userId: string, taskId: string) => {
   return data[0];
 };
 
-// Update a task by ID with user identification
 export const updateTaskById = async (
   userId: string,
   taskId: string,

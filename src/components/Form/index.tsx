@@ -12,7 +12,6 @@ const Form = ({ FormType }: { FormType: "Log In" | "Sign Up" }) => {
   const [error, setError] = React.useState<string | null>(null);
 
   useEffect(() => {
-    // Redirect if the user is already signed in
     if (user) {
       router.replace("/");
     }
@@ -24,10 +23,8 @@ const Form = ({ FormType }: { FormType: "Log In" | "Sign Up" }) => {
             data: { user },
           } = await supabase.auth.getUser();
 
-          // Set the user in the state
           if (user) {
             setUser(user);
-            // Redirect as soon as the user signs in
             router.replace("/");
           }
         }
@@ -50,7 +47,7 @@ const Form = ({ FormType }: { FormType: "Log In" | "Sign Up" }) => {
         await signIn(email, password);
       } else {
         await signUp(email, password);
-        await signIn(email, password); // Sign in after sign up
+        await signIn(email, password);
       }
     } catch (error: unknown) {
       setError((error as Error)?.message);

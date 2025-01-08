@@ -1,19 +1,18 @@
-// utils/auth.ts
 import { supabase } from "./supabase";
 
 export const signUp = async (email: string, password: string) => {
-  const { user, error } = await supabase.auth.signUp({ email, password });
+  const { data, error } = await supabase.auth.signUp({ email, password });
   if (error) throw error;
-  return user;
+  return data.user;
 };
 
 export const signIn = async (email: string, password: string) => {
-  const { user, error } = await supabase.auth.signInWithPassword({
+  const { data, error } = await supabase.auth.signInWithPassword({
     email,
     password,
   });
   if (error) throw error;
-  return user;
+  return data.user;
 };
 
 export const signOut = async () => {
