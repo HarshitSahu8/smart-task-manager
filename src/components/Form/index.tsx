@@ -20,7 +20,6 @@ const Form = ({ FormType }: { FormType: "Log In" | "Sign Up" }) => {
     const { data: authListener } = supabase.auth.onAuthStateChange(
       async (event) => {
         if (event === "SIGNED_IN") {
-          alert("Signed in");
           const {
             data: { user },
           } = await supabase.auth.getUser();

@@ -5,6 +5,7 @@ import {
   updateTask,
   deleteTask,
   Task,
+  getTaskById,
 } from "../utils/api";
 
 interface TaskStoreState {
@@ -13,6 +14,7 @@ interface TaskStoreState {
   addTask: (task: Omit<Task, "id">) => Promise<void>;
   editTask: (id: string, task: Partial<Task>) => Promise<void>;
   removeTask: (id: string) => Promise<void>;
+  toggleTaskCompletion: (id: string, user_id: string) => Promise<void>;
 }
 
 const useTaskStore = create<TaskStoreState>((set) => ({
@@ -36,6 +38,16 @@ const useTaskStore = create<TaskStoreState>((set) => ({
   removeTask: async (id) => {
     await deleteTask(id);
     set((state) => ({ tasks: state.tasks.filter((t) => t.id !== id) }));
+  },
+  toggleTaskCompletion: async (id: string, user_id: string) => {
+    const task = await getTaskById(user_id, id);
+    const updatedTask = { ...task, completed: !task.completed };
+    await updateTask(id, updatedTask);
+    set((state) => ({
+      tasks: state.tasks.map((t) =>
+        t.id === id ? { ...t, ...updatedTask } : t
+      ),
+    }));
   },
 }));
 

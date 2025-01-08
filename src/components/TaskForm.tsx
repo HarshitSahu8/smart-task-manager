@@ -5,12 +5,16 @@ import useUserStore from "@/store/userStore";
 interface TaskFormProps {
   initialData?: Partial<Task>;
   onSubmit: (task: Task) => void;
+  heading?: boolean;
+  buttonLabel?: string;
 }
 
 export default function TaskForm({
   initialData = {},
   onSubmit,
-}: TaskFormProps) {
+  heading = false,
+  buttonLabel = "Submit",
+}: Readonly<TaskFormProps>) {
   const [task, setTask] = useState<Task>({
     id: initialData.id ?? null,
     title: initialData.title ?? "",
@@ -65,7 +69,11 @@ export default function TaskForm({
       onSubmit={handleSubmit}
       className="max-w-4xl mx-auto p-6 bg-white rounded-lg shadow-md"
     >
-      <h2 className="text-3xl font-semibold text-gray-800 mb-6">Create Task</h2>
+      {heading && (
+        <h2 className="text-3xl font-semibold text-gray-800 mb-6">
+          Create Task
+        </h2>
+      )}
 
       <div className="mb-4">
         <label
@@ -82,7 +90,7 @@ export default function TaskForm({
           onChange={handleChange}
           placeholder="Task Title"
           required
-          className="w-full mt-2 px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+          className="text-gray-800 w-full mt-2 px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
         />
       </div>
 
@@ -100,7 +108,7 @@ export default function TaskForm({
           onChange={handleChange}
           placeholder="Task Description"
           required
-          className="w-full mt-2 px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+          className="text-gray-800 w-full mt-2 px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
         />
       </div>
 
@@ -118,7 +126,7 @@ export default function TaskForm({
           value={task.due_date}
           onChange={handleChange}
           required
-          className="w-full mt-2 px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+          className="text-gray-800 w-full mt-2 px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
         />
       </div>
 
@@ -134,7 +142,7 @@ export default function TaskForm({
           name="priority"
           value={task.priority}
           onChange={handleChange}
-          className="w-full mt-2 px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+          className="text-gray-800 w-full mt-2 px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
         >
           <option value="Low">Low</option>
           <option value="Medium">Medium</option>
@@ -144,9 +152,9 @@ export default function TaskForm({
 
       <button
         type="submit"
-        className="w-full py-3 px-6 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
+        className="text-gray-800 w-full py-3 px-6 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
       >
-        Save Task
+        {buttonLabel}
       </button>
     </form>
   );

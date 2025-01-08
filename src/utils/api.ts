@@ -53,3 +53,33 @@ export const deleteTask = async (id: string) => {
   }
   return data;
 };
+
+// Get a task by ID with user identification
+export const getTaskById = async (userId: string, taskId: string) => {
+  const { data, error } = await supabase
+    .from("tasks")
+    .select("*")
+    .eq("id", taskId)
+    .eq("user_id", userId);
+  if (error) {
+    throw error;
+  }
+  return data[0];
+};
+
+// Update a task by ID with user identification
+export const updateTaskById = async (
+  userId: string,
+  taskId: string,
+  task: Partial<Task>
+) => {
+  const { data, error } = await supabase
+    .from("tasks")
+    .update(task)
+    .eq("id", taskId)
+    .eq("user_id", userId);
+  if (error) {
+    throw error;
+  }
+  return data;
+};

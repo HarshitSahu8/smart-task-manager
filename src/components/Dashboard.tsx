@@ -14,25 +14,25 @@ export default function Dashboard() {
   const { user } = useUserStore();
   const [error, setError] = useState<string | null>(null);
 
-  const fetchAllTask = async () => {
-    try {
-      if (!user) {
-        router.push("/login");
-        return;
-      }
-      fetchTasks(user.id);
-      setTasks(tasksState);
-      setLoading(false);
-    } catch (error: unknown) {
-      setError((error as Error).message);
-    } finally {
-      setLoading(false);
-    }
-  };
-
   useEffect(() => {
+    const fetchAllTask = async () => {
+      try {
+        if (!user) {
+          router.push("/login");
+          return;
+        }
+        fetchTasks(user.id);
+        setTasks(tasksState);
+        setLoading(false);
+      } catch (error: unknown) {
+        setError((error as Error).message);
+      } finally {
+        setLoading(false);
+      }
+    };
+
     fetchAllTask();
-  }, []);
+  }, [user, fetchTasks, tasksState, router]);
 
   const totalTasks = tasks.length;
   const completedTasks = tasks.filter((task) => task.completed).length;
@@ -69,19 +69,26 @@ export default function Dashboard() {
         </div>
       </div>
 
-      {/* Logout Button */}
-      <div className="flex justify-center">
+      <div className="flex justify-center space-x-4">
         <button
           onClick={() => {
             signOut().then(() => {
               router.push("/login");
             });
-          }} // Assuming you're using Supabase
+          }}
           className="w-48 py-3 px-6 bg-red-600 text-white font-semibold rounded-lg hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500"
         >
           Logout
         </button>
+
+        <button
+          onClick={() => router.push("/add-task")}
+          className="w-48 py-3 px-6 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
+        >
+          Add Task
+        </button>
       </div>
+
       {error && <p className="text-red-500 text-sm mt-4">{error}</p>}
     </div>
   );
